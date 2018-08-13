@@ -1,0 +1,8 @@
+server:
+  port: 9091
+
+netty:
+  port: 12345
+  basePackage: com.iflytek.netty.rpc.service;
+  clientName: nettyClient
+#  url: 127.0.0.1

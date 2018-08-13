@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" shutdownHook="disable">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!--异步输出-->
+        <Async name="AsyncConsole">
+            <appender-ref ref="Console"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="info"/>
+        <logger name="org.springframework.beans.factory.support" level="info"/>
+        <logger name="org.springframework.context.annotation" level="info"/>
+        <logger name="org.springframework.core.io.support" level="info"/>
+        <logger name="org.springframework.jdbc.datasource" level="info"/>
+        <logger name="org.springframework.boot.autoconfigure.logging" level="info"/>
+        <logger name="org.mybatis.spring" level="info"/>
+        <logger name="com.iflytek.netty" level="debug"/>
+        <Root level="info">
+            <AppenderRef ref="AsyncConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>
