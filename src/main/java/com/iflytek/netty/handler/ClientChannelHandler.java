@@ -4,6 +4,7 @@ import com.iflytek.netty.client.ClientChannelInitializer;
 import com.iflytek.netty.common.MethodInvokeMeta;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 2018-08-06 11:32
  */
 @Slf4j
-public class ClientChannelHandler extends ChannelHandlerAdapter {
+public class ClientChannelHandler extends ChannelInboundHandlerAdapter {
     private MethodInvokeMeta methodInvokeMeta;
     private ClientChannelInitializer clientChannelInitializer;
 

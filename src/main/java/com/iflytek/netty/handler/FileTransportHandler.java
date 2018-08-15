@@ -5,6 +5,7 @@ import com.iflytek.netty.rpc.entity.TransportResponse;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 2018-08-07 11:47
  */
 @Slf4j
-public class FileTransportHandler extends ChannelHandlerAdapter {
+public class FileTransportHandler extends ChannelInboundHandlerAdapter {
 
     private TransportRequest transportRequest;
 

@@ -3,6 +3,7 @@ package com.iflytek.netty.handler;
 import com.iflytek.netty.rpc.entity.FileTransferDO;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +15,7 @@ import java.io.RandomAccessFile;
  * @date: 2018-08-06 16:15
  */
 @Slf4j
-public class FileTransferHandler extends ChannelHandlerAdapter {
+public class FileTransferHandler extends ChannelInboundHandlerAdapter {
     private int byteRead;
     private volatile int start = 0;
     private volatile int lastLength = 0;

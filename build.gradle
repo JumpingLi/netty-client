@@ -30,13 +30,16 @@ configurations {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
+//    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-webflux'){
+//        exclude group: 'io.netty'
+    }
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
-    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+//    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 
     // https://mvnrepository.com/artifact/io.netty/netty-all
-    compile group: 'io.netty', name: 'netty-all', version: '5.0.0.Alpha2'
-
+//    compile group: 'io.netty', name: 'netty-all', version: '5.0.0.Alpha2'
+//    compile group: 'io.netty', name: 'netty-transport', version: '5.0.0.Alpha2'
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

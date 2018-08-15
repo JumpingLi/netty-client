@@ -2,8 +2,11 @@ package com.iflytek.netty.rpc.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,22 @@ public class PackageClassUtils {
                 getAllFile(filePathStr, file, classStrs);
             } else {
                 String filePath = s.replaceAll("\\.", "/");
+                LOGGER.debug("==== file_path : " + filePath);
+                String resourcePath = PackageClassUtils.class.getResource("/").getPath();
+                resourcePath = resourcePath.replaceAll("!","");
+                LOGGER.debug("==== resource_path : " + resourcePath);
+//                URL pathURL;
+//                File file = null;
+//                try {
+//                    pathURL = ResourceUtils.getURL("classpath:" + filePath);
+//                    pathURL = pathURL.rep
+//                    LOGGER.debug("===== URL" + pathURL);
+//                    file =  ResourceUtils.getFile(pathURL);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
                 File file = new File(PackageClassUtils.class.getResource("/").getPath() + "/" + filePath);
+
                 classStrs = getClassReferenceList(classStrs, file, s);
             }
         }
@@ -80,10 +98,11 @@ public class PackageClassUtils {
     private static void getAllFile(String s, File file, List<String> classStrs) {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
-            if (files != null)
+            if (files != null) {
                 for (File file1 : files) {
                     getAllFile(s, file1, classStrs);
                 }
+            }
         } else {
             String path = file.getPath();
             String cleanPath = path.replaceAll("/", ".");

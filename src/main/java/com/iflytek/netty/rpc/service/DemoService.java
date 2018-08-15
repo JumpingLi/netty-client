@@ -31,6 +31,6 @@ public interface DemoService {
      * @param request
      * @return
      */
-    TransportResponse fileTransport(TransportRequest request) throws Exception;
+    TransportResponse fileTransport(TransportRequest request);
 
 }

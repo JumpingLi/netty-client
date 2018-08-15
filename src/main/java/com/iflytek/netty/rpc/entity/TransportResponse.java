@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class TransportResponse implements Serializable {
     private static final long serialVersionUID = 786160175234046271L;
 
+    private Integer code;
     private String id;
     private String name;
     private String message;
