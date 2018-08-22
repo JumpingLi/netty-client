@@ -3,6 +3,6 @@ server:
 
 netty:
   port: 12345
-  basePackage: com.iflytek.netty.rpc.service;
+  basePackage: com.iflytek.sas.voice.transfer.server.rpc.service;
   clientName: nettyClient
-#  url: 127.0.0.1
+  url: 192.168.85.125

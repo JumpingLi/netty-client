@@ -17,7 +17,7 @@
         <logger name="org.springframework.jdbc.datasource" level="info"/>
         <logger name="org.springframework.boot.autoconfigure.logging" level="info"/>
         <logger name="org.mybatis.spring" level="info"/>
-        <logger name="com.iflytek.netty" level="debug"/>
+        <logger name="com.iflytek.sas.voice.transfer.server" level="debug"/>
         <Root level="info">
             <AppenderRef ref="AsyncConsole"/>
         </Root>
