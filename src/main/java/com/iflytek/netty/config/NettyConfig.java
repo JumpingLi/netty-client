@@ -24,12 +24,11 @@ public class NettyConfig {
                                        @Value("${netty.port}") int port) {
         return new NettyClient(url, port);
     }
-
-    @Bean("fileTransportClient")
-    public FileTransportClient initFileTransferClient(@Value("${netty.url}") String url,
-                                                      @Value("${netty.port}") int port) {
-        return new FileTransportClient(url, port);
-    }
-
+//
+//    @Bean("fileTransportClient")
+//    public FileTransportClient initFileTransferClient(@Value("${netty.url}") String url,
+//                                                      @Value("${netty.port}") int port) {
+//        return new FileTransportClient(url, port);
+//    }
 
 }

@@ -31,9 +31,17 @@ public class NettyClient {
         bootstrap.channel(NioSocketChannel.class);
     }
 
+    public int getPort() {
+        return port;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     @PreDestroy
     public void close() {
-        log.info("关闭资源");
+        log.info("关闭client连接资源");
         worker.shutdownGracefully();
     }
 
@@ -43,12 +51,11 @@ public class NettyClient {
             bootstrap.handler(customChannelInitializer);
             ChannelFuture sync = bootstrap.connect(url, port).sync();
             sync.channel().closeFuture().sync();
-            Object response = customChannelInitializer.getResponse();
-            return response;
+            return customChannelInitializer.getResponse();
         } catch (InterruptedException e) {
             retry++;
             if (retry > MAX_RETRY_TIMES) {
-                throw new RuntimeException("调用Wrong");
+                throw new RuntimeException("调用错误");
             } else {
                 try {
                     Thread.sleep(100);

@@ -1,20 +1,12 @@
 package com.iflytek.netty;
 
-import com.iflytek.netty.client.FileTransportClient;
-import com.iflytek.netty.rpc.entity.TransportRequest;
 import com.iflytek.netty.rpc.service.DemoService;
-import com.iflytek.netty.rpc.util.GzipUtils;
-import com.iflytek.netty.rpc.util.ThreadPoolUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author jpli3
@@ -23,10 +15,7 @@ import java.util.concurrent.ExecutorService;
 @SpringBootApplication
 public class NettyClientApplication implements CommandLineRunner {
 
-    @Autowired
-    private FileTransportClient fileTransportClient;
-
-    @Autowired(required = false)
+    @Resource
     private DemoService demoService;
 
     public static void main(String[] args) {
@@ -50,7 +39,5 @@ public class NettyClientApplication implements CommandLineRunner {
 //        req.setAttachment(GzipUtils.gzip(data));
 //            FileTransportClient client = new FileTransportClient("127.0.0.1",12345);
 //        fileTransportClient.connect(req);
-
-
     }
 }

@@ -5,6 +5,7 @@ import com.iflytek.netty.rpc.util.WrapMethodUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -34,15 +35,15 @@ public class RpcProxyFactoryBean extends AbstractFactoryBean implements Invocati
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         final MethodInvokeMeta meta = WrapMethodUtils.readMethod(interfaceClass, method, args);
-        if (!meta.getMethodName().equals("toString")) {
-            log.info("[invoke] 调用接口{}, 调用方法名：{}, 参数类型：{}, 返回值类型{}",
-                    meta.getInterfaceClass(),
-                    meta.getMethodName(),
-//                    meta.getArgs(),
-                    meta.getParameterTypes(),
-                    meta.getReturnType());
-        }
-        return nettyClient.remoteCall(meta, 0);
+//        if (!meta.getMethodName().equals("toString")) {
+//            log.info("[invoke] 调用接口{}, 调用方法名：{}, 参数类型：{}, 返回值类型{}",
+//                    meta.getInterfaceClass(),
+//                    meta.getMethodName(),
+////                    meta.getArgs(),
+//                    meta.getParameterTypes(),
+//                    meta.getReturnType());
+//        }
+        return new NettyClient(nettyClient.getUrl(), nettyClient.getPort()).remoteCall(meta, 0);
     }
 
     public void setInterfaceClass(Class interfaceClass) {
