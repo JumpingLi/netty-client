@@ -6,10 +6,7 @@ import com.iflytek.sas.voice.transfer.server.rpc.service.DemoService;
 import com.iflytek.sas.voice.transfer.server.rpc.util.GzipUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -36,9 +33,9 @@ public class RootController {
         return demoService.print();
     }
 
-    @RequestMapping(path = {"/transport/{n}/{fileName}"}, method = RequestMethod.GET)
-    public Object testFileTransfer(@PathVariable Integer n,
-                                   @PathVariable String fileName) {
+    @RequestMapping(path = {"/transport/{fileName}"}, method = RequestMethod.GET)
+    public Object testFileTransfer(@PathVariable String fileName,
+                                   @RequestParam(name = "sleepTime",required = false) Integer sleepTime) {
 //        ExecutorService pool = ThreadPoolUtils.getExecutorService("netty-client-pool-%d");
 //        for (int i = 0; i < n; i++) {
 //            String path = System.getProperty("user.dir") + File.separatorChar + "send"
@@ -47,12 +44,13 @@ public class RootController {
 //        }
         String path = System.getProperty("user.dir") + File.separatorChar + "send"
                     + File.separatorChar + fileName + ".wav";
+        TransportResponse response = null;
         try {
             File file = new File(path);
             TransportRequest req = new TransportRequest();
             req.setId(UUID.randomUUID().toString().replace("-", ""));
             req.setName(file.getName());
-            req.setAppend(Boolean.TRUE);
+            req.setAppend(Boolean.FALSE);
             FileInputStream in = new FileInputStream(file);
             byte[] allData = new byte[in.available()];
             if (in.read(allData) == -1) {
@@ -71,26 +69,31 @@ public class RootController {
                 req.setAttachment(GzipUtils.gzip(data));
                 req.setMessage(i + "");
                 if (i == mod && rem ==0){
-                    req.setAppend(Boolean.FALSE);
+                    req.setAppend(Boolean.TRUE);
                 }
-                TransportResponse response = demoService.fileTransport(req);
-                log.debug("---client send: 文件Id=" + req.getId() + ", 文件名=" + req.getName() +
-                        ", 分段批次=" + req.getMessage() + ", code=" + response.getCode());
+                response = demoService.audioTransport(req);
+                log.debug("---client received: 文件Id=" + response.getId() + ", 文件名=" + response.getName() +
+                        ", 分段批次=" + response.getMessage() + ", code=" + response.getCode());
+                if (sleepTime != null){
+                    Thread.sleep(sleepTime);
+                }
             }
             if (rem > 0) {
                 byte[] data = new byte[rem];
                 System.arraycopy(allData, start, data, 0, rem);
                 req.setAttachment(GzipUtils.gzip(data));
                 req.setMessage((mod + 1) + "");
-                req.setAppend(Boolean.FALSE);
-                TransportResponse response = demoService.fileTransport(req);
-                log.debug("---client send: 文件Id=" + req.getId() + ", 文件名=" + req.getName() +
-                        ", 分段批次" + req.getMessage() + ", code=" + response.getCode());
+                req.setAppend(Boolean.TRUE);
+                Instant startTime = Instant.now();
+                response = demoService.audioTransport(req);
+                Instant endTime = Instant.now();
+                log.error("---client received: 文件Id=" + response.getId() + ", 文件名=" + response.getName() +
+                        ", 分段批次" + response.getMessage() + ", code=" + response.getCode() + ", statistic-time=" + Duration.between(startTime, endTime).toMillis());
             }
         } catch (Exception e) {
             log.error("---传输文件异常: ", e);
         }
-        return "ok";
+        return response;
     }
 
 //    private class FileTransportRunnable implements Runnable {
@@ -173,7 +176,7 @@ public class RootController {
                 req.setAppend(false);
             }
             req.setAttachment(GzipUtils.gzip(buf));
-//            Thread.sleep(len / 16);
+            Thread.sleep(len / 16);
             Instant start = Instant.now();
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.update(req.getAttachment());

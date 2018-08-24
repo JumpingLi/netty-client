@@ -49,7 +49,7 @@ public class ClientChannelHandler extends SimpleChannelInboundHandler {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
-        log.debug("---返回结果：" + msg.toString());
+//        log.debug("---返回结果：" + msg.toString());
         clientChannelInitializer.setResponse(msg);
     }
 }

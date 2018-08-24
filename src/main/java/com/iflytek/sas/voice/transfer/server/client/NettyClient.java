@@ -1,6 +1,7 @@
 package com.iflytek.sas.voice.transfer.server.client;
 
 import com.iflytek.sas.voice.transfer.server.common.MethodInvokeMeta;
+import com.iflytek.sas.voice.transfer.server.rpc.entity.TransportResponse;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -55,7 +56,7 @@ public class NettyClient {
             return customChannelInitializer.getResponse();
         } catch (InterruptedException e) {
             log.error("===调用失败：",e);
-            return null;
+            return TransportResponse.builder().message("===client调用server失败").build();
         }finally {
             //优雅的退出，释放NIO线程组
             worker.shutdownGracefully();
