@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>
- * create by 叶云轩 at 2018/3/3-下午2:13
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author jpli3
  */
 public class PackageClassUtils {
     private final static Logger LOGGER = LoggerFactory.getLogger(PackageClassUtils.class);

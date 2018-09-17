@@ -34,14 +34,13 @@ public class RpcProxyFactoryBean extends AbstractFactoryBean implements Invocati
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         final MethodInvokeMeta meta = WrapMethodUtils.readMethod(interfaceClass, method, args);
-//        if (!meta.getMethodName().equals("toString")) {
-//            log.info("[invoke] 调用接口{}, 调用方法名：{}, 参数类型：{} ,返回值类型{}",
-//                    meta.getInterfaceClass(),
-//                    meta.getMethodName(),
-////                    meta.getArgs(),
-//                    meta.getParameterTypes(),
-//                    meta.getReturnType());
-//        }
+        if (!meta.getMethodName().equals("toString")) {
+            log.info("[invoke] 调用接口{}, 调用方法名：{}, 参数类型：{} ,返回值类型{}",
+                    meta.getInterfaceClass(),
+                    meta.getMethodName(),
+                    meta.getParameterTypes(),
+                    meta.getReturnType());
+        }
         return new NettyClient(nettyClient.getUrl(),nettyClient.getPort()).remoteCall(meta);
 //        return nettyClient.remoteCall(meta);
     }

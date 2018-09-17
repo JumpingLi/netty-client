@@ -9,9 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * <p>
- * create by 叶云轩 at 2018/3/3-下午2:14
- * contact by tdg_yyx@foxmail.com
+ *
+ * @author jpli3
  */
 public class RemoteMethodInvokeUtil implements ApplicationContextAware {
 
